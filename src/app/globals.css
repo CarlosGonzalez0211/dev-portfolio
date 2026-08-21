@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ===== NIGHT THEME (default) ===== */
+:root {
+  --sky-top: #1a0a2e;
+  --sky-mid: #2d1b4e;
+  --sky-bottom: #c2724a;
+  --accent: #c2724a;
+  --surface: #1c1216;
+  --surface-alt: #2a1a1e;
+  --chrome: #3d2a2a;
+  --text: #f5e6c8;
+  --text-muted: #a08070;
+  --sand: #8b5e3c;
+  --sand-light: #a0714f;
+  --pyramid: #6b4226;
+  --pyramid-shadow: #5a3720;
+  --pyramid-highlight: #6b4226;
+  --pyramid-outline: #3f2717;
+  --pyramid-band: #4a2e1c;
+  --cactus: #2d4a2d;
+  --cactus-dark: #1d321d;
+  --celestial: #f5e6c8;
+  --celestial-glow: rgba(245, 230, 200, 0.15);
+  --celestial-outline: #9a7a4a;
+  --sun-highlight: #fffaf0;
+  --moon-crater: #cdbb92;
+  --cloud-opacity: 0;
+  --star-opacity: 1;
+}
+
+/* ===== DAY THEME ===== */
+[data-theme="day"] {
+  --sky-top: #1e6091;
+  --sky-mid: #74b9e0;
+  --sky-bottom: #f5d4a0;
+  --accent: #c2724a;
+  --surface: #faf5ed;
+  --surface-alt: #efe6d6;
+  --chrome: #efe6d6;
+  --text: #3a2a1a;
+  --text-muted: #8a7a6a;
+  --sand: #d4a56a;
+  --sand-light: #e8be82;
+  --pyramid: #c49a6c;
+  --pyramid-shadow: #a07d55;
+  --pyramid-highlight: #d4ac7a;
+  --pyramid-outline: #7a5c3c;
+  --pyramid-band: #8a6a48;
+  --cactus: #4a7a3a;
+  --cactus-dark: #356028;
+  --celestial: #f5d060;
+  --celestial-glow: rgba(245, 208, 96, 0.15);
+  --celestial-outline: #b5831f;
+  --sun-highlight: #fff4c2;
+  --moon-crater: #d9c15a;
+  --cloud-opacity: 1;
+  --star-opacity: 0;
+}
+
+/* ===== TAILWIND THEME INLINE ===== */
+@theme inline {
+  --color-accent: var(--accent);
+  --color-surface: var(--surface);
+  --color-surface-alt: var(--surface-alt);
+  --color-chrome: var(--chrome);
+  --color-text-primary: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-sky-top: var(--sky-top);
+  --color-sky-mid: var(--sky-mid);
+  --color-sky-bottom: var(--sky-bottom);
+  --color-sand: var(--sand);
+  --color-sand-light: var(--sand-light);
+  --color-pyramid: var(--pyramid);
+  --color-cactus: var(--cactus);
+  --color-celestial: var(--celestial);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Theming transitions are continuous: ThemeProvider interpolates every CSS
+   variable each animation frame, so no CSS transition mechanism is needed. */
+
+/* ===== BASE STYLES ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+html[data-mode="scroll"] {
+  overflow-y: auto !important;
+  height: auto !important;
+  scroll-behavior: smooth;
+}
+
+html[data-mode="scroll"] body {
+  overflow-y: auto !important;
+  height: auto !important;
+}
+
+body {
+  background: var(--surface);
+  color: var(--text);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.pixel-panel {
+  border: 2px solid var(--chrome);
+  box-shadow: 4px 4px 0 color-mix(in srgb, var(--chrome) 70%, transparent);
+}
+
+.pixel-button {
+  border: 2px solid var(--chrome);
+  background: var(--surface);
+  padding: 0.55rem 0.8rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--chrome) 70%, transparent);
+  transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.pixel-button:hover { background: var(--surface-alt); }
+.pixel-button:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 color-mix(in srgb, var(--chrome) 70%, transparent); }
+.pixel-button-primary { border-color: var(--accent); background: var(--accent); color: white; box-shadow: 3px 3px 0 color-mix(in srgb, var(--accent) 55%, black); }
+
+.pixel-tag {
+  border: 1px solid color-mix(in srgb, var(--accent) 65%, transparent);
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  padding: 0.18rem 0.38rem;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.62rem;
+  color: var(--text);
+}
+
+/* ===== SCROLLBAR STYLING ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-alt);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--chrome);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ===== SELECTION ===== */
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* ===== FOCUS RING ===== */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
