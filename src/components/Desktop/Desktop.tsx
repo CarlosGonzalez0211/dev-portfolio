@@ -47,14 +47,14 @@ export function Desktop() {
     >
       <Wallpaper />
 
-      <div className="absolute inset-0" aria-label="Desktop icons">
+      <div className="absolute inset-0 pointer-events-none" aria-label="Desktop icons">
         {desktopFiles.map((file) => {
           const position = { ...defaultPositions[file.id], ...positions[file.id] };
           return (
             <DesktopIcon
               key={file.id}
               file={file}
-              position={{ x: 16 + position.x * GRID_X, y: 16 + position.y * GRID_Y }}
+              position={position}
               grid={{ x: GRID_X, y: GRID_Y, width: ICON_WIDTH, bottom: TASKBAR_HEIGHT + 16 }}
               onMove={(x, y) => moveIcon(file.id, x, y)}
             />

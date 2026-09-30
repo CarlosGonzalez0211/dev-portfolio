@@ -70,8 +70,8 @@ export function DesktopIcon({ file, position, grid, onMove }: DesktopIconProps) 
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      style={{ left: position.x, top: position.y, touchAction: 'none' }}
-      className={`absolute flex w-20 select-none flex-col items-center gap-1.5 p-2 group transition-colors hover:bg-white/10 ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+      style={{ left: 16 + position.x * grid.x, top: 16 + position.y * grid.y, touchAction: 'none' }}
+      className={`absolute flex w-20 select-none flex-col items-center gap-1.5 p-2 group pointer-events-auto transition-colors hover:bg-white/10 ${dragging ? 'cursor-grabbing' : 'cursor-grab'}`}
       title={file.name}
     >
       <div className="w-12 h-12 rounded-lg bg-surface/45 border border-white/10 backdrop-blur-[2px] flex items-center justify-center text-2xl shadow-lg group-hover:bg-accent/30 transition-colors">
