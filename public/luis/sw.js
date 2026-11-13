@@ -1,5 +1,5 @@
 /* Offline support for /luis/. Bump VERSION to force a clean cache. */
-const VERSION = 'luis-v1';
+const VERSION = 'luis-v2';
 const SHELL = [
   '/luis/',
   '/luis/manifest.webmanifest',

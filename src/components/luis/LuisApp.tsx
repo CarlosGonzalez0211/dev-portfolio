@@ -2,8 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from 'react';
 import { UI } from './content';
-import { useLuisStore } from './store';
-import { TabIcons, useT } from './shared';
+import { TabIcons } from './shared';
 import { TodayTab } from './TodayTab';
 import { EatingOutTab } from './EatingOutTab';
 import { GuideTab } from './GuideTab';
@@ -35,14 +34,8 @@ export function LuisApp() {
   // Local data lives in localStorage, so render only on the client.
   const mounted = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const [tab, setTab] = useState<Tab>('today');
-  const t = useT();
-  const lang = useLuisStore((s) => s.lang);
-  const setLang = useLuisStore((s) => s.setLang);
 
   useEffect(registerServiceWorker, []);
-  useEffect(() => {
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   const go = (next: Tab) => {
     setTab(next);
@@ -53,28 +46,13 @@ export function LuisApp() {
     return <div className="min-h-dvh bg-l-bg" />;
   }
 
-  const langToggle = (
-    <div className="inline-flex rounded-full border border-l-border bg-l-card p-0.5 text-sm font-semibold" role="group" aria-label="Language">
-      {(['es', 'en'] as const).map((l) => (
-        <button
-          key={l}
-          onClick={() => setLang(l)}
-          aria-pressed={lang === l}
-          className={`min-h-9 rounded-full px-3 uppercase ${lang === l ? 'bg-l-primary text-l-on-primary' : 'text-l-muted'}`}
-        >
-          {l}
-        </button>
-      ))}
-    </div>
-  );
-
   return (
     <div className="min-h-dvh md:flex">
       {/* Sidebar (tablet / laptop) */}
       <aside className="sticky top-0 hidden h-dvh w-60 shrink-0 flex-col border-r border-l-border bg-l-card p-4 md:flex">
         <div className="mb-6 flex items-center gap-2 px-2">
           <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-l-primary text-xl" aria-hidden>🥗</span>
-          <span className="text-lg font-bold">{t(UI.appName)}</span>
+          <span className="text-lg font-bold">{UI.appName}</span>
         </div>
         <nav className="flex flex-col gap-1">
           {TABS.map((id) => (
@@ -87,11 +65,10 @@ export function LuisApp() {
               }`}
             >
               {TabIcons[id]('h-6 w-6')}
-              {t(UI.tabs[id])}
+              {UI.tabs[id]}
             </button>
           ))}
         </nav>
-        <div className="mt-auto px-2">{langToggle}</div>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
@@ -99,9 +76,8 @@ export function LuisApp() {
         <div className="pt-safe sticky top-0 z-30 border-b border-l-border bg-l-bg/90 backdrop-blur md:hidden">
           <div className="flex h-14 items-center justify-between px-4">
             <span className="flex items-center gap-2 font-bold">
-              <span aria-hidden>🥗</span> {t(UI.appName)}
+              <span aria-hidden>🥗</span> {UI.appName}
             </span>
-            {langToggle}
           </div>
         </div>
 
@@ -110,7 +86,7 @@ export function LuisApp() {
           {tab === 'out' && <EatingOutTab />}
           {tab === 'guide' && <GuideTab />}
           {tab === 'progress' && <ProgressTab />}
-          <p className="mt-8 text-center text-xs leading-relaxed text-l-muted">{t(UI.disclaimer)}</p>
+          <p className="mt-8 text-center text-xs leading-relaxed text-l-muted">{UI.disclaimer}</p>
         </main>
       </div>
 
@@ -129,7 +105,7 @@ export function LuisApp() {
               <span className={`flex h-8 w-14 items-center justify-center rounded-full ${tab === id ? 'bg-l-primary-soft' : ''}`}>
                 {TabIcons[id]('h-6 w-6')}
               </span>
-              {t(UI.tabs[id])}
+              {UI.tabs[id]}
             </button>
           ))}
         </div>

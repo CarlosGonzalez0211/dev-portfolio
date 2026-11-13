@@ -3,7 +3,6 @@
 import { useSyncExternalStore } from 'react';
 import { UI } from './content';
 import { useLuisStore } from './store';
-import { useT } from './shared';
 
 type InstallPromptEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
 
@@ -34,7 +33,6 @@ function isStandalone() {
 }
 
 export function InstallCard() {
-  const t = useT();
   const dismissed = useLuisStore((s) => s.installDismissed);
   const dismiss = useLuisStore((s) => s.dismissInstall);
   const prompt = useSyncExternalStore(subscribe, () => deferred, () => null);
@@ -60,23 +58,23 @@ export function InstallCard() {
       <div className="flex gap-3">
         <span className="text-3xl" aria-hidden>📲</span>
         <div>
-          <h2 className="font-bold">{t(UI.installTitle)}</h2>
-          <p className="text-sm leading-snug text-l-muted">{t(UI.installBody)}</p>
+          <h2 className="font-bold">{UI.installTitle}</h2>
+          <p className="text-sm leading-snug text-l-muted">{UI.installBody}</p>
         </div>
       </div>
       {!prompt && (
         <p className="rounded-xl bg-l-card-alt p-3 text-[0.95rem] leading-snug">
-          {t(isIos ? UI.installIos : UI.installOther)}
+          {isIos ? UI.installIos : UI.installOther}
         </p>
       )}
       <div className="flex gap-2">
         {prompt && (
           <button onClick={install} className="min-h-12 flex-1 rounded-xl bg-l-primary font-semibold text-l-on-primary">
-            {t(UI.installButton)}
+            {UI.installButton}
           </button>
         )}
         <button onClick={dismiss} className="min-h-12 flex-1 rounded-xl border-2 border-l-border font-semibold text-l-muted">
-          {t(UI.later)}
+          {UI.later}
         </button>
       </div>
     </section>

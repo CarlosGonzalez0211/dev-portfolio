@@ -1,13 +1,8 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { HABITS, MEALS, PROFILE, type L } from './content';
-import { dateKey, useLuisStore, type DayLog } from './store';
-
-export function useT() {
-  const lang = useLuisStore((s) => s.lang);
-  return useCallback((l: L) => l[lang], [lang]);
-}
+import { useEffect, useState } from 'react';
+import { HABITS, MEALS, PROFILE } from './content';
+import { dateKey, type DayLog } from './store';
 
 /** Today's date key; refreshes when the app is reopened or the day rolls over. */
 export function useToday() {

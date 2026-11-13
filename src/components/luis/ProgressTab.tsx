@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { UI } from './content';
 import { dateKey, useLuisStore, type WeightEntry } from './store';
-import { SectionTitle, dayScore, useT, useToday } from './shared';
+import { SectionTitle, dayScore, useToday } from './shared';
 
 function WeightChart({ weights, goal }: { weights: WeightEntry[]; goal: number | null }) {
   const W = 320;
@@ -17,7 +17,7 @@ function WeightChart({ weights, goal }: { weights: WeightEntry[]; goal: number |
   const line = weights.map((w, i) => `${i === 0 ? 'M' : 'L'}${x(i)},${y(w.kg)}`).join(' ');
 
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="Weight chart">
+    <svg viewBox={`0 0 ${W} ${H}`} className="h-auto w-full" role="img" aria-label="Gráfica de peso">
       {goal && (
         <>
           <line x1={0} x2={W} y1={y(goal)} y2={y(goal)} stroke="var(--l-primary)" strokeDasharray="5 5" strokeWidth={1.5} />
@@ -35,8 +35,6 @@ function WeightChart({ weights, goal }: { weights: WeightEntry[]; goal: number |
 }
 
 export function ProgressTab() {
-  const t = useT();
-  const lang = useLuisStore((s) => s.lang);
   const weights = useLuisStore((s) => s.weights);
   const goalKg = useLuisStore((s) => s.goalKg);
   const days = useLuisStore((s) => s.days);
@@ -47,7 +45,7 @@ export function ProgressTab() {
   const [kg, setKg] = useState('');
   const [goalInput, setGoalInput] = useState('');
 
-  const locale = lang === 'es' ? 'es-MX' : 'en-US';
+  const locale = 'es-MX';
   const fmtDate = (d: string, opts: Intl.DateTimeFormatOptions) =>
     new Date(`${d}T12:00:00`).toLocaleDateString(locale, opts);
 
@@ -102,11 +100,11 @@ export function ProgressTab() {
 
   return (
     <div className="space-y-5">
-      <h1 className="text-2xl font-bold md:text-3xl">{t(UI.tabs.progress)}</h1>
+      <h1 className="text-2xl font-bold md:text-3xl">{UI.tabs.progress}</h1>
 
       <div className="grid gap-5 lg:grid-cols-2">
         <section className="l-card p-4">
-          <SectionTitle>⚖️ {t(UI.addWeight)}</SectionTitle>
+          <SectionTitle>⚖️ {UI.addWeight}</SectionTitle>
           <form onSubmit={submitWeight} className="flex gap-2">
             <input
               inputMode="decimal"
@@ -114,34 +112,34 @@ export function ProgressTab() {
               value={kg}
               onChange={(e) => setKg(e.target.value)}
               className={inputCls}
-              aria-label={t(UI.weight)}
+              aria-label={UI.weight}
             />
             <button type="submit" className={btnCls}>
-              {t(UI.save)}
+              {UI.save}
             </button>
           </form>
-          <p className="mt-2 text-sm text-l-muted">{t(UI.weightHint)}</p>
+          <p className="mt-2 text-sm text-l-muted">{UI.weightHint}</p>
 
           <form onSubmit={submitGoal} className="mt-4 flex gap-2">
             <input
               inputMode="decimal"
-              placeholder={goalKg ? `${t(UI.goal)}: ${goalKg} kg` : `${t(UI.goal)} (kg)`}
+              placeholder={goalKg ? `${UI.goal}: ${goalKg} kg` : `${UI.goal} (kg)`}
               value={goalInput}
               onChange={(e) => setGoalInput(e.target.value)}
               className={inputCls}
-              aria-label={t(UI.goal)}
+              aria-label={UI.goal}
             />
             <button type="submit" className="min-h-12 shrink-0 rounded-xl border-2 border-l-primary px-4 font-semibold text-l-primary">
-              {t(UI.setGoal)}
+              {UI.setGoal}
             </button>
           </form>
         </section>
 
         <section className="l-card p-4">
           <div className="mb-3 flex items-baseline justify-between">
-            <h2 className="text-lg font-bold">{t(UI.last7)}</h2>
+            <h2 className="text-lg font-bold">{UI.last7}</h2>
             <span className="text-sm text-l-muted">
-              🔥 {t(UI.streak)}: <strong className="text-l-text">{streak}</strong> {t(UI.days)}
+              🔥 {UI.streak}: <strong className="text-l-text">{streak}</strong> {UI.days}
             </span>
           </div>
           <div className="flex h-36 items-end gap-2">
@@ -163,19 +161,19 @@ export function ProgressTab() {
       </div>
 
       <section className="l-card p-4">
-        <SectionTitle>{t(UI.weight)}</SectionTitle>
+        <SectionTitle>{UI.weight}</SectionTitle>
         {weights.length === 0 ? (
-          <p className="text-l-muted">{t(UI.noWeights)}</p>
+          <p className="text-l-muted">{UI.noWeights}</p>
         ) : (
           <>
             <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
-              {stat(t(UI.start), `${first.kg} kg`)}
-              {stat(t(UI.current), `${last.kg} kg`)}
-              {stat(t(UI.lost), `${lost > 0 ? '-' : ''}${Math.abs(lost).toFixed(1)} kg`, lost > 0)}
-              {stat(t(UI.toGo), toGo !== null ? `${Math.max(0, toGo).toFixed(1)} kg` : '—')}
+              {stat(UI.start, `${first.kg} kg`)}
+              {stat(UI.current, `${last.kg} kg`)}
+              {stat(UI.lost, `${lost > 0 ? '-' : ''}${Math.abs(lost).toFixed(1)} kg`, lost > 0)}
+              {stat(UI.toGo, toGo !== null ? `${Math.max(0, toGo).toFixed(1)} kg` : '—')}
             </div>
             <WeightChart weights={weights} goal={goalKg} />
-            <h3 className="mb-2 mt-4 font-semibold">{t(UI.history)}</h3>
+            <h3 className="mb-2 mt-4 font-semibold">{UI.history}</h3>
             <ul className="divide-y divide-l-border">
               {[...weights].reverse().map((w) => (
                 <li key={w.date} className="flex min-h-11 items-center justify-between gap-2">
@@ -183,7 +181,7 @@ export function ProgressTab() {
                   <span className="flex items-center gap-3">
                     <strong>{w.kg} kg</strong>
                     <button onClick={() => removeWeight(w.date)} className="min-h-10 px-2 text-sm text-l-red">
-                      {t(UI.remove)}
+                      {UI.remove}
                     </button>
                   </span>
                 </li>
